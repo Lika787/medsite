@@ -1,5 +1,11 @@
 from django.db import models
 import uuid
+from django.contrib.auth.models import User
+
+
+#class MyManager(models.Manager):
+ #   def custom_filter(self, **kwargs):
+  #      return super().get_queryset.filter(**kwargs)
 
 
 class MedicalStaff(models.Model):
@@ -17,6 +23,9 @@ class MedicalStaff(models.Model):
     specialization = models.CharField(max_length=100)
     startWork = models.DateField()
     phone = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.surname
 
 
 class Address(models.Model):
@@ -60,6 +69,7 @@ class Patient(models.Model):
 
     def __str__(self):
         return self.surname
+    objects = models.Manager()
 
 
 class NationCl025(models.Model):
@@ -67,6 +77,8 @@ class NationCl025(models.Model):
     codeIll = models.CharField(max_length=30)
     nameIll = models.CharField(max_length=70)
 
+    def __str__(self):
+        return self.nameIll
 
 class TreatmentSession(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -77,13 +89,16 @@ class TreatmentSession(models.Model):
     idDoctor = models.ForeignKey(MedicalStaff, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return self.IdMainIll, self.startSession
+        return self.IdMainIll
 
 
 class Comorbidity(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    idSession = models.ForeignKey(TreatmentSession, on_delete=models.CASCADE)
+    idSession = models.ForeignKey(TreatmentSession, on_delete=models.CASCADE, null=True)
     IdNameIll = models.ForeignKey(NationCl025, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.IdNameIll
 
 
 class StageOfTreatment(models.Model):
@@ -184,7 +199,7 @@ class NationCl027(models.Model):
 class LaboratoryTest(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     idState = models.ForeignKey(State, on_delete=models.CASCADE)
-    nameTest = models.CharField(max_length=60)
+    nameTest = models.ForeignKey(NationCl027, null=True, on_delete=models.SET_NULL)
     valueTest = models.FloatField()
     unitTest = models.CharField(max_length=20)
     dateTest = models.DateTimeField()
@@ -204,7 +219,7 @@ class LabMedicalStaff (models.Model):
 class CatalogMeasurement(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     nameMeasurement = models.CharField(max_length=100)
-    unitMeasurement = models.FloatField()
+    unitMeasurement = models.CharField(max_length=20)
 
 
 class Measurement(models.Model):
@@ -212,7 +227,6 @@ class Measurement(models.Model):
     idState = models.ForeignKey(State, on_delete=models.CASCADE)
     idCatalogMeasurement = models.ForeignKey(CatalogMeasurement, null=True, on_delete=models.SET_NULL)
     valueMeasurement = models.FloatField()
-    unitMeasurement = models.CharField(max_length=20)
     dateMeasurement = models.DateTimeField()
     idMedStaff = models.ForeignKey(MedicalStaff, null=True, on_delete=models.SET_NULL)
 

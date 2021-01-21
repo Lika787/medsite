@@ -1,48 +1,39 @@
 from django.urls import path
-from . import views
+from rest_framework.routers import DefaultRouter
+from .views import MedicalStaffViewSet, PatientDateBirth, PatientListView, ImageViewSet, MeasurementViewSet,\
+    CatalogMeasurementViewSet, LabMedicalStaffViewSet, LaboratoryTestViewSet, NationCl027ViewSet, StateViewSet,\
+    EusMedicalStaffViewSet, ElectroUltrasoundTherapyViewSet, PhysiotherapyMedicalStaffViewSet, PhysiotherapyViewSet, \
+    PharmacotherapyViewSet, NationClPillViewSet, SurgeryMedicalStaffViewSet, SurgeryViewSet, NationCl026ViewSet,\
+    StageOfTreatmentViewSet, ComorbidityViewSet, TreatmentSessionViewSet, NationCl025ViewSet, PatientViewSet, \
+    AddressViewSet
 
+router = DefaultRouter()
 
-urlpatterns = [
+router.register(r'MedicalStaff', MedicalStaffViewSet, basename='user')
+router.register(r'Address', AddressViewSet, basename='user')
+router.register(r'Patient', PatientViewSet, basename='user')
+router.register(r'NationCl025', NationCl025ViewSet, basename='user')
+router.register(r'TreatmentSession', TreatmentSessionViewSet, basename='user')
+router.register(r'Comorbidity', ComorbidityViewSet, basename='user')
+router.register(r'StageOfTreatment', StageOfTreatmentViewSet, basename='user')
+router.register(r'NationCl026', NationCl026ViewSet, basename='user')
+router.register(r'Surgery', SurgeryViewSet, basename='user')
+router.register(r'SurgeryMedicalStaff', SurgeryMedicalStaffViewSet, basename='user')
+router.register(r'NationClPill', NationClPillViewSet, basename='user')
+router.register(r'Pharmacotherapy', PharmacotherapyViewSet, basename='user')
+router.register(r'Physiotherapy', PhysiotherapyViewSet, basename='user')
+router.register(r'PhysiotherapyMedicalStaff', PhysiotherapyMedicalStaffViewSet, basename='user')
+router.register(r'ElectroUltrasoundTherapy', ElectroUltrasoundTherapyViewSet, basename='user')
+router.register(r'EusMedicalStaff', EusMedicalStaffViewSet, basename='user')
+router.register(r'State', StateViewSet, basename='user')
+router.register(r'NationCl027', NationCl027ViewSet, basename='user')
+router.register(r'LaboratoryTest', LaboratoryTestViewSet, basename='user')
+router.register(r'LabMedicalStaff', LabMedicalStaffViewSet, basename='user')
+router.register(r'CatalogMeasurement', CatalogMeasurementViewSet, basename='user')
+router.register(r'Measurement', MeasurementViewSet, basename='user')
+router.register(r'Image', ImageViewSet, basename='user')
 
-    path('patient', views.patientApiOverview, name="patient-api-overview"),
-    path('patient-list/', views.patientList, name="patient-list"),
-    path('patient-detail/<str:pk>/', views.patientDetail, name="patient-detail"),
-    path('patient-create/', views.patientCreate, name="patient-create"),
-    path('patient-update/<str:pk>/', views.patientUpdate, name="patient-update"),
-    path('patient-delete/<str:pk>/', views.patientDelete, name="patient-delete"),
+router.register(r'PatientDateBirth', PatientDateBirth, basename='user')
+router.register(r'PatientListView', PatientListView, basename='user')
 
-    path('treatmentSession', views.treatmentSessionApiOverview, name="treatmentSession-api-overview"),
-    path('treatmentSession-list/', views.treatmentSessionList, name="treatmentSession-list"),
-    path('treatmentSession-detail/<str:pk>/', views.treatmentSessionDetail, name="treatmentSession-detail"),
-    path('treatmentSession-create/', views.treatmentSessionCreate, name="treatmentSession-create"),
-    path('treatmentSession-update/<str:pk>/', views.treatmentSessionUpdate, name="treatmentSession-update"),
-    path('treatmentSession-delete/<str:pk>/', views.treatmentSessionDelete, name="treatmentSession-delete"),
-
-    path('stageOfTreatment', views.stageOfTreatmentApiOverview, name="stageOfTreatment-api-overview"),
-    path('stageOfTreatment-list/', views.stageOfTreatmentList, name="stageOfTreatment-list"),
-    path('stageOfTreatment-detail/<str:pk>/', views.stageOfTreatmentDetail, name="stageOfTreatment-detail"),
-    path('stageOfTreatment-create/', views.stageOfTreatmentCreate, name="stageOfTreatment-create"),
-    path('stageOfTreatment-update/<str:pk>/', views.stageOfTreatmentUpdate, name="stageOfTreatment-update"),
-    path('stageOfTreatment-delete/<str:pk>/', views.stageOfTreatmentDelete, name="stageOfTreatment-delete"),
-
-    path('pharmacotherapy', views.pharmacotherapyApiOverview, name="pharmacotherapy-api-overview"),
-    path('pharmacotherapy-list/', views.pharmacotherapyList, name="pharmacotherapy-list"),
-    path('pharmacotherapy-detail/<str:pk>/', views.pharmacotherapyDetail, name="pharmacotherapy-detail"),
-    path('pharmacotherapy-create/', views.pharmacotherapyCreate, name="pharmacotherapy-create"),
-    path('pharmacotherapy-update/<str:pk>/', views.pharmacotherapyUpdate, name="pharmacotherapy-update"),
-    path('pharmacotherapy-delete/<str:pk>/', views.pharmacotherapyDelete, name="pharmacotherapy-delete"),
-
-    path('state', views.stateApiOverview, name="state-api-overview"),
-    path('state-list/', views.stateList, name="state-list"),
-    path('state-detail/<str:pk>/', views.stateDetail, name="state-detail"),
-    path('state-create/', views.stateCreate, name="state-create"),
-    path('state-update/<str:pk>/', views.stateUpdate, name="state-update"),
-    path('state-delete/<str:pk>/', views.stateDelete, name="state-delete"),
-
-    path('laboratoryTest', views.laboratoryTestApiOverview, name="laboratoryTest-api-overview"),
-    path('laboratoryTest-list/', views.laboratoryTestList, name="laboratoryTest-list"),
-    path('laboratoryTest-detail/<str:pk>/', views.laboratoryTestDetail, name="laboratoryTest-detail"),
-    path('laboratoryTest-create/', views.laboratoryTestCreate, name="laboratoryTest-create"),
-    path('laboratoryTest-update/<str:pk>/', views.laboratoryTestUpdate, name="laboratoryTest-update"),
-    path('laboratoryTest-delete/<str:pk>/', views.laboratoryTestDelete, name="laboratoryTest-delete"),
-]
+urlpatterns = router.urls
